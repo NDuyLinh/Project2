@@ -5,15 +5,15 @@ import { Provider } from "react-redux";
 import store from "./reducer";
 import DashBoard from "./pages/DashBoard";
 import ScrollToTop from "./components/ScrollToTop";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter  } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <HashRouter>
+    <BrowserRouter  basename='/'>
       <ScrollToTop/>
       <DashBoard/>
-    </HashRouter>
+    </BrowserRouter>
   </Provider>
 );
 

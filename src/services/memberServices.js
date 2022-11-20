@@ -1,6 +1,12 @@
-import { db, colRef } from './firebaseConfig';
+import { db, colRef, auth } from './firebaseConfig';
 import { doc, getDocs, updateDoc } from 'firebase/firestore';
-
+import { 
+  signInWithEmailAndPassword,
+  signOut
+} from "firebase/auth";
+/*
+* Service file call API
+*/
 export default class memberServices {
 
   static getAllMembers = () => {
@@ -13,5 +19,9 @@ export default class memberServices {
       status_id: parseInt(param.statusId),
       status: param.status 
     });
+  }
+
+  static signInByFireBase = ({email, password}) => {
+    return signInWithEmailAndPassword(auth, email, password);
   }
 }

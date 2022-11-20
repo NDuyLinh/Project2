@@ -1,11 +1,33 @@
 
+/** GLOBAL */
 import React from "react";
+import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from 'react-bootstrap';
+import { isEmpty } from "lodash";
+
+/** ACTION */
+import memberActions from "../../services/memberActions";
 
 const SignInComponent = () => {
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    trigger,
+    reset
+  } = useForm();
+
+  const signIn = async (data) => {
+    console.log(data);
+    const response = await memberActions.signIn(data.email, data.password);
+    console.log(response);
+  }
+
+
   return (
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-8 mb-lg-5">
@@ -16,14 +38,26 @@ const SignInComponent = () => {
                 <div className="text-center text-md-center mb-4 mt-md-0">
                   <h3 className="mb-0">Sign in</h3>
                 </div>
-                <Form className="mt-4">
+                <Form className="mt-4" onSubmit={handleSubmit(signIn)}>
                   <Form.Group id="email" className="mb-4">
                     <Form.Label>Your Email</Form.Label>
                     <InputGroup>
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faEnvelope} />
                       </InputGroup.Text>
-                      <Form.Control autoFocus required type="email" placeholder="example@company.com" />
+                      <Form.Control 
+                        autoFocus 
+                        required
+                        name="email"
+                        type="email" 
+                        placeholder="You Email" 
+                        {...register("email", {
+                          require: true,
+                          validate: (value) => {
+                            return !isEmpty(value);
+                          },
+                        })}
+                      />
                     </InputGroup>
                   </Form.Group>
                   <Form.Group>
@@ -33,7 +67,18 @@ const SignInComponent = () => {
                         <InputGroup.Text>
                           <FontAwesomeIcon icon={faUnlockAlt} />
                         </InputGroup.Text>
-                        <Form.Control required type="password" placeholder="Password" />
+                        <Form.Control 
+                          required 
+                          type="password" 
+                          placeholder="Password"
+                          name="password"
+                          {...register("password", {
+                            require: true,
+                            validate: (value) => {
+                              return !isEmpty(value);
+                            },
+                          })}
+                        />
                       </InputGroup>
                     </Form.Group>
                     <div className="d-flex justify-content-between align-items-center mb-4">
