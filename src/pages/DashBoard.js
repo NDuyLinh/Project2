@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
-import {Preloader, Sidebar} from '../components'
-import {Navbar, Container} from 'react-bootstrap';
+import {Preloader, Sidebar, Navbar} from '../components'
 import { auth } from '../services/firebaseConfig';
 
 import HomePage from "./home";
@@ -40,15 +39,7 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
         <Sidebar />
 
         <main className="content">
-          {rest.title && (<Navbar variant="dark" expanded className="ps-0 pe-2 pb-0">
-            <Container fluid className="px-0">
-              <div className="d-flex justify-content-between w-100">
-                <div className="d-flex align-items-center">
-                  <h1 className="h2">{rest.title}</h1>
-                </div>
-              </div>
-            </Container>
-          </Navbar>)}
+          <Navbar/>
           <Component {...props} />
         </main>
       </>
@@ -61,13 +52,14 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 const DashBoard = (props) => {
   useEffect(() => {
     auth.onAuthStateChanged(user => {
+      console.log(user);
       if(user) {
 
       } else {
         props.history.push("/login");
       }
     })
-  }, [])
+  }, []);
 
   return (
     <Switch>

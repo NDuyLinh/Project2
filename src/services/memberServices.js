@@ -1,24 +1,24 @@
-import { db, colRef, auth } from './firebaseConfig';
-import { doc, getDocs, updateDoc } from 'firebase/firestore';
+import { auth, dbRef } from './firebaseConfig';
 import { 
   signInWithEmailAndPassword,
-  signOut
 } from "firebase/auth";
+import { child, get, onValue } from 'firebase/database';
 /*
 * Service file call API
 */
 export default class memberServices {
 
-  static getAllMembers = () => {
-    return getDocs(colRef);
-  }
-
-  static updateStatus = (param) => {
-    const docRef = doc(db, 'members', param.memberId);
-    return updateDoc(docRef, {
-      status_id: parseInt(param.statusId),
-      status: param.status 
-    });
+  static getAllProducts = () => {
+    try {
+      const snapshot = onValue(dbRef, (snapshot) => {
+        const data = snapshot.val();
+        console.log(data);
+      });
+      console.log(snapshot);
+      return [];
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   static signInByFireBase = ({email, password}) => {

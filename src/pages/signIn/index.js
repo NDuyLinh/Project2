@@ -1,7 +1,11 @@
 
 /** GLOBAL */
 import React from "react";
+import Session from "../../common/Session";
+import { useDispatch } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { setMembers } from "../../reducer/slices/MembersSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
@@ -11,22 +15,31 @@ import { isEmpty } from "lodash";
 /** ACTION */
 import memberActions from "../../services/memberActions";
 
-const SignInComponent = () => {
-
+const SignInComponent = ({ history }) => {
+  const dispatch = useDispatch();
+  
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    trigger,
     reset
   } = useForm();
 
   const signIn = async (data) => {
-    console.log(data);
     const response = await memberActions.signIn(data.email, data.password);
-    console.log(response);
+    if(response && response.user) {
+      const {accessToken, email} = response.user;
+      dispatch(setMembers({
+        token: accessToken,
+        email: email
+      }));
+      reset();
+      history.push("/");
+    }
   }
 
+  if (!Session.loadSession()) {
+    history.push("/");
+  }
 
   return (
     <main>
@@ -125,4 +138,4 @@ const SignInComponent = () => {
   );
 };
 
-export default SignInComponent;
+export default withRouter(SignInComponent);
