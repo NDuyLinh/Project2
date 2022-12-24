@@ -91,7 +91,7 @@ export const CircleChart = (props) => {
 
 export const BarChart = (props) => {
   const { labels = [], series = [], chartClassName = "ct-golden-section" } = props;
-  const data = { labels, series };
+  const data = { labels, series, distributeSeries: true };
 
   const options = {
     low: 0,
@@ -100,13 +100,8 @@ export const BarChart = (props) => {
       position: 'end'
     },
     axisY: {
-      showGrid: false,
-      showLabel: false,
-      offset: 0
     }
   };
-
-  console.log(data);
 
   const plugins = [
     ChartistTooltip()

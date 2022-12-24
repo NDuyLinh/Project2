@@ -1,26 +1,29 @@
 
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import { Col, Row } from 'react-bootstrap';
-import { CircleChartWidget, TeamMembersWidget, ProgressTrackWidget } from "../../components/Widgets";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { PageVisitsTable } from "../../components/Tables";
-import { trafficShares } from "../../data/charts";
+import ProductChart from "../../components/ProductChart";
 import BadmintonCalendar from "../../components/Calendar";
-import memberActions from "../../services/memberActions";
+import { dbRef } from '../../services/firebaseConfig';
+import memberActions from '../../services/memberActions';
 
-
+import { onValue } from 'firebase/database';
+import { isNil } from 'lodash';
 const HomePage = () => {
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     getAllProducts();
     
   }, []);
 
-  const getAllProducts = async () => {
-    const response = await memberActions.getProducts();
-    if(response && response.length > 0) {
-    }
+  const getAllProducts = () => {
+    onValue(dbRef, (snapshot) => {
+      const data = snapshot.val();
+      if(!isNil(data)) {
+        const products = memberActions.fetchProduct(Object.values(data));
+        setProducts(products);
+      }
+    });
   }
   
   return (
@@ -31,7 +34,12 @@ const HomePage = () => {
             <Col xs={12} xl={8} className="mb-4">
               <Row>
                 <Col xs={12} className="mb-4">
-                  <PageVisitsTable/>
+                  <ProductChart
+                      title="Total orders"
+                      value={452}
+                      percentage={15.2}
+                      products={products} 
+                      />
                 </Col>
               </Row>
             </Col>

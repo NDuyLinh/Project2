@@ -52,7 +52,6 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 const DashBoard = (props) => {
   useEffect(() => {
     auth.onAuthStateChanged(user => {
-      console.log(user);
       if(user) {
 
       } else {

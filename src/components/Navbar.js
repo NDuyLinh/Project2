@@ -2,9 +2,8 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faCog, faEnvelopeOpen, faSearch, faSignOutAlt, faUserShield } from "@fortawesome/free-solid-svg-icons";
-import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
-import {  Nav, Form, Image, Navbar, Dropdown, Container, InputGroup } from 'react-bootstrap';
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import {  Nav, Image, Navbar, Dropdown, Container } from 'react-bootstrap';
 import { auth } from '../services/firebaseConfig';
 import { signOut } from "firebase/auth";
 
@@ -17,18 +16,10 @@ const NavbarComponent = (props) => {
   }
 
   return (
-    <Navbar variant="dark" expanded className="ps-0 pe-2 pb-0">
+    <Navbar variant="dark" expanded className="ps-0 pe-2 pb-0 mb-3">
       <Container fluid className="px-0">
         <div className="d-flex justify-content-between w-100">
           <div className="d-flex align-items-center">
-            <Form className="navbar-search">
-              <Form.Group id="topbarSearch">
-                <InputGroup className="input-group-merge search-bar">
-                  <InputGroup.Text><FontAwesomeIcon icon={faSearch} /></InputGroup.Text>
-                  <Form.Control type="text" placeholder="Search" />
-                </InputGroup>
-              </Form.Group>
-            </Form>
           </div>
           <Nav className="align-items-center">
             <Dropdown as={Nav.Item}>
@@ -41,12 +32,6 @@ const NavbarComponent = (props) => {
                 </div>
               </Dropdown.Toggle>
               <Dropdown.Menu className="user-dropdown dropdown-menu-right mt-2">
-                <Dropdown.Item className="fw-bold">
-                  <FontAwesomeIcon icon={faUserCircle} className="me-2" /> My Profile
-                </Dropdown.Item>
-                <Dropdown.Item className="fw-bold">
-                  <FontAwesomeIcon icon={faUserShield} className="me-2" /> Sign Up
-                </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item className="fw-bold" onClick={() => onSignOut()}>
                   <FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2" /> Logout

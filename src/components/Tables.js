@@ -12,17 +12,6 @@ export const PageVisitsTable = () => {
           </Col>
         </Row>
       </Card.Header>
-      <Table responsive className="align-items-center table-flush">
-        <thead className="thead-light">
-          <tr>
-            <th scope="col">Màu sắc</th>
-            <th scope="col">Thời gian</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </Table>
     </Card>
   );
 };

@@ -25,6 +25,6 @@ const app = initializeApp(firebaseConfig);
 //init services
 export const db = getDatabase(app);
 
-export const dbRef = ref(db, 'UsersData');
+export const dbRef = ref(db, 'Data');
 
 export const auth = getAuth(app);

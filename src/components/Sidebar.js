@@ -76,9 +76,7 @@ const SideBar = (props = {}) => {
           <div className="sidebar-inner px-4 pt-3">
             <Nav className="flex-column pt-3 pt-md-0">
               <Image src={`${process.env.PUBLIC_URL}/images/image-2.png`} className="card-img-top border-white px-4 py-2" />
-              <NavItem title="Lịch Thi đấu" link="/" icon={faCalendarAlt} />
-              <NavItem title="Thành Viên" icon={faHandHoldingUsd} link="/members" />
-              <NavItem title="Sân" icon={faCog} link="/stadium" />
+              <NavItem title="Trang chủ" link="/" icon={faCalendarAlt} />
 
               <Dropdown.Divider className="my-3 border-indigo" />
             </Nav>
