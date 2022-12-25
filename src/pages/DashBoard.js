@@ -56,7 +56,9 @@ const DashBoard = (props) => {
       if(user) {
 
       } else {
-        props.history.push("/login");
+        if(props.location.pathname === routes.home) {
+          props.history.push("/login");
+        }
       }
     })
   }, []);

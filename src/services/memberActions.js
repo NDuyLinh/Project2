@@ -38,7 +38,10 @@ export default class memberActions {
       const response = await memberServices.registerEmailFirebase(email, password);
       console.log(response);
     } catch(err) {
-      console.log(err);
+      const message = err.message.split(":");
+      return {
+        errorMessage: message.length > 1 ? message[1] : message[0]
+      }
     }
   }
   

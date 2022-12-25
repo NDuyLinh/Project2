@@ -1,5 +1,6 @@
 
 import React, {useState} from "react";
+import Session from "../../common/Session";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from 'react-bootstrap';
@@ -9,27 +10,34 @@ import { useForm } from "react-hook-form";
 import { routes } from "../../routes";
 import memberActions from "../../services/memberActions";
 
-
-export default () => {
+const Register = ({history}) => {
   const [errorMessage, setErrorMessage] = useState(null);
   
+  if (!Session.loadSession()) {
+    history.push("/");
+  }
+
   const {
     register,
     handleSubmit,
     reset
   } = useForm();
   
-  const onRegister = (data) => {
+  const onRegister = async (data) => {
     const {email, password, confirmPassword} = data;
     if(password !== confirmPassword) {
-      setErrorMessage("Confirm pass isn't correct");
+      setErrorMessage("Confirm password isn't correct");
       return;
     }
-    const response = memberActions.registerEmail(email, password);
-    
-      
+    const response = await memberActions.registerEmail(email, password);
+    if(response && response.errorMessage) {
+      setErrorMessage(response.errorMessage);
+      return;
+    }
+    reset();
+    history.push("/");
   }
-  
+
   return (
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
@@ -98,6 +106,7 @@ export default () => {
                       I agree to the <b>terms and conditions</b>
                     </FormCheck.Label>
                   </FormCheck>
+                  {errorMessage && <p className="error text-reddit">{errorMessage}</p>}
 
                   <Button variant="primary" type="submit" className="w-100">
                     Sign up
@@ -120,3 +129,5 @@ export default () => {
     </main>
   );
 };
+
+export default Register;
