@@ -32,5 +32,15 @@ export default class memberActions {
       }
     }
   }
+  
+  static async registerEmail(email, password) {
+    try {
+      const response = await memberServices.registerEmailFirebase(email, password);
+      console.log(response);
+    } catch(err) {
+      console.log(err);
+    }
+  }
+  
 }
 

@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import {Preloader, Sidebar, Navbar} from '../components'
 import { auth } from '../services/firebaseConfig';
+import { routes } from "../routes";
 
 import HomePage from "./home";
-import Members from "./members";
 import SignIn from "./signIn";
+import Register from "./register";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -62,10 +63,9 @@ const DashBoard = (props) => {
 
   return (
     <Switch>
-      <RouteWithSidebar exact path='/' component={HomePage} title="Dashboard"/>
-      <RouteWithLoader exact path='/login' component={SignIn} title="CMS"/>
-      <RouteWithSidebar exact path='/members' component={Members} title=""/>
-      <RouteWithSidebar exact path='/stadium' component={Members} title=""/>
+      <RouteWithSidebar exact path={routes.home} component={HomePage} title="Dashboard"/>
+      <RouteWithLoader exact path={routes.login} component={SignIn} title="CMS"/>
+      <RouteWithLoader exact path={routes.register} component={Register} title="CMS"/>
       <Redirect to="/"/>
     </Switch>
   )
