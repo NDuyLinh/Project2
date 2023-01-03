@@ -74,7 +74,7 @@ export const getFilterProductByDate = (products, type) => {
     default:
       break;
   }
-  if(result.productsFilter.length > 0) {
+  if(result.productsFilter && result.productsFilter.length > 0) {
     const axisY = getArrDate(result.fromDate, result.toDate);
     let productsChart = [];
     // loop date

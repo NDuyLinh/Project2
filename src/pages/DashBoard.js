@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import {Preloader, Sidebar, Navbar} from '../components'
 import { auth } from '../services/firebaseConfig';
 import { routes } from "../routes";
+import { setMembers } from "../reducer/slices/MembersSlice";
 
 import HomePage from "./home";
 import SignIn from "./signIn";
@@ -51,10 +53,15 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 
 
 const DashBoard = (props) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     auth.onAuthStateChanged(user => {
       if(user) {
-
+        dispatch(setMembers({
+          email: user.email,
+          token: user.token
+        }))
       } else {
         if(props.location.pathname === routes.home) {
           props.history.push("/login");

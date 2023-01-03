@@ -25,33 +25,21 @@ const HomePage = () => {
       }
     });
   }
+
+  console.log(products);
   
   return (
     <React.Fragment>
       <Row>
         <Col xs={12} xl={12} className="mb-4">
           <Row>
-            <Col xs={12} xl={8} className="mb-4">
+            <Col xs={12} xl={12} className="mb-4">
               <Row>
                 <Col xs={12} className="mb-4">
                   <ProductChart
-                      title="Total orders"
-                      value={452}
-                      percentage={15.2}
+                      title="Total produces"
                       products={products} 
                       />
-                </Col>
-              </Row>
-            </Col>
-
-            <Col xs={12} xl={4}>
-              <Row>
-                <Col xs={12} className="mb-4">
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12} className="px0">
-                  <BadmintonCalendar/>
                 </Col>
               </Row>
             </Col>

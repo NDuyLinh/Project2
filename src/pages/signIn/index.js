@@ -1,6 +1,6 @@
 
 /** GLOBAL */
-import React from "react";
+import React, {useState} from "react";
 import Session from "../../common/Session";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -11,11 +11,13 @@ import { faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { routes } from "../../routes";
+import { LOGIN_FAILED } from "../../data/message";
 
 /** ACTION */
 import memberActions from "../../services/memberActions";
 
 const SignInComponent = ({ history }) => {
+  const [errorMessage, setErrorMessage] = useState(null);
   const dispatch = useDispatch();
   
   const {
@@ -26,6 +28,9 @@ const SignInComponent = ({ history }) => {
 
   const signIn = async (data) => {
     const response = await memberActions.signIn(data.email, data.password);
+    if(response.error) {
+      setErrorMessage(LOGIN_FAILED);
+    }
     if(response && response.user) {
       const {accessToken, email} = response.user;
       dispatch(setMembers({
@@ -84,14 +89,8 @@ const SignInComponent = ({ history }) => {
                         />
                       </InputGroup>
                     </Form.Group>
-                    <div className="d-flex justify-content-between align-items-center mb-4">
-                      <Form.Check type="checkbox">
-                        <FormCheck.Input id="defaultCheck5" className="me-2" />
-                        <FormCheck.Label htmlFor="defaultCheck5" className="mb-0">Remember me</FormCheck.Label>
-                      </Form.Check>
-                      <Card.Link className="small text-end">Lost password?</Card.Link>
-                    </div>
                   </Form.Group>
+                  {errorMessage && <p className="text-reddit">{errorMessage}</p>}
                   <Button variant="primary" type="submit" className="w-100">
                     Sign in
                   </Button>

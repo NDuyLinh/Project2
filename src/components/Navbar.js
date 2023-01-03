@@ -1,5 +1,6 @@
 
 import React from "react";
+import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
@@ -8,6 +9,7 @@ import { auth } from '../services/firebaseConfig';
 import { signOut } from "firebase/auth";
 
 const NavbarComponent = (props) => {
+  const {email} = useSelector(state => state.membersSlice);
   const onSignOut = () => {
     signOut(auth).then(() => {
       localStorage.removeItem("_u");
@@ -27,7 +29,7 @@ const NavbarComponent = (props) => {
                 <div className="media d-flex align-items-center">
                   <Image src={`${process.env.PUBLIC_URL}/images/user-flat.svg`} className="user-avatar md-avatar rounded-circle" />
                   <div className="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                    <span className="mb-0 font-small fw-bold">Bonnie Green</span>
+                    <span className="mb-0 font-small fw-bold">{email}</span>
                   </div>
                 </div>
               </Dropdown.Toggle>

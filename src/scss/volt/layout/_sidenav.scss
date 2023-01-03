@@ -29,14 +29,20 @@
 				color: $light;
 				background-color: #2e3650;
 				border: $border-width solid lighten( $dark, 20% );
+				.sidebar-icon {
+					color: $light;
+				}
 			}
 		}
 		.nav-link {
-			color: $light;
-			border: $border-width solid $dark;
+			color: #2e3650;
+			border: none;
 			&:hover {
 				color: $light;
 				background-color: #2e3650;
+				.sidebar-icon {
+					color: $light;
+				}
 			}
 			&.active {
 				color: $white;
@@ -57,7 +63,7 @@
 
 		.sidebar-icon {
 			margin-right: .5rem;
-			color: $white;
+			color: #2e3650;
 			span{
 				min-width: 22px;
 			}

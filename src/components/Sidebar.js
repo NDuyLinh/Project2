@@ -4,7 +4,7 @@ import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt, faCog, faHandHoldingUsd} from "@fortawesome/free-solid-svg-icons";
+import { faHome, faFolder } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -72,12 +72,12 @@ const SideBar = (props = {}) => {
         </Navbar.Toggle>
       </Navbar>
       <CSSTransition timeout={300} in={show} classNames="sidebar-transition">
-        <SimpleBar className={`collapse ${showClass} sidebar d-md-block bg-primary text-white`}>
+        <SimpleBar className={`collapse ${showClass} sidebar d-md-block bg-left text-white`}>
           <div className="sidebar-inner px-4 pt-3">
             <Nav className="flex-column pt-3 pt-md-0">
               <Image src={`${process.env.PUBLIC_URL}/images/image-2.png`} className="card-img-top border-white px-4 py-2" />
-              <NavItem title="Trang chủ" link="/" icon={faCalendarAlt} />
-
+              <NavItem title="Home" link="/" icon={faHome} />
+              <NavItem title="Report" link="/report" icon={faFolder} />
               <Dropdown.Divider className="my-3 border-indigo" />
             </Nav>
           </div>
