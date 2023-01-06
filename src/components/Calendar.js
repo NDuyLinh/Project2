@@ -8,7 +8,7 @@ const WEEK_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const NUM_WEEk = [0, 1, 2, 3, 4, 5];
 const today = new Date();
 
-const BadmintonCalendar = (props) => {
+const Calendar = (props) => {
   const [state, setState] = useReducer((state, newState) => ({ ...state, ...newState }), {
     selectedDate: today.getDate(),
     selectedMonth: today.getMonth() + 1,
@@ -82,15 +82,14 @@ const BadmintonCalendar = (props) => {
   return (
     <Card border="light" className="shadow-sm calendar-container">
       <Card.Body>
-        <div className="elegant-calencar d-md-flex">
+        <div className="elegant-calencar d-md-flex flex-column">
           <div
             className="wrap-header d-flex align-items-center img"
-            style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/calendar.jpg)` }}
           >
             <p id="reset">Today</p>
             <div id="header" className="p-0">
               <div className="head-info">
-                <div className="head-month">
+                <div className="head-month mt-3">
                   {moment.months(today.getMonth())} - {today.getFullYear()}
                 </div>
                 <div className="head-day">{state.selectedDate}</div>
@@ -126,4 +125,4 @@ const BadmintonCalendar = (props) => {
   );
 };
 
-export default BadmintonCalendar;
+export default Calendar;

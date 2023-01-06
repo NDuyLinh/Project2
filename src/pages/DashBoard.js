@@ -7,6 +7,7 @@ import { routes } from "../routes";
 import { setMembers } from "../reducer/slices/MembersSlice";
 
 import HomePage from "./home";
+import Report from "./report";
 import SignIn from "./signIn";
 import Register from "./register";
 
@@ -73,6 +74,7 @@ const DashBoard = (props) => {
   return (
     <Switch>
       <RouteWithSidebar exact path={routes.home} component={HomePage} title="Dashboard"/>
+      <RouteWithSidebar exact path={routes.report} component={Report} title="Report"/>
       <RouteWithLoader exact path={routes.login} component={SignIn} title="CMS"/>
       <RouteWithLoader exact path={routes.register} component={Register} title="CMS"/>
       <Redirect to="/"/>

@@ -4,7 +4,7 @@ import moment from "moment";
 import { isNil } from "lodash";
 export default class memberActions {
   static fetchProduct (products) {
-    return products.reduce((total, product) => {
+    const formatProduct = products.reduce((total, product) => {
       if(isNil(product.color) || isNil(product.timestamp)) {
         return [...total];
       }
@@ -20,6 +20,12 @@ export default class memberActions {
       }
       return [...total, {color: product.color, date: formatDate, value: 1}]
     },[]);
+
+    formatProduct.forEach(function(row, index) {
+      row.index = index + 1;
+    });
+
+    return formatProduct;
   }
 
   static async signIn (email, password) {

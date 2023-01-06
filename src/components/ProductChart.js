@@ -26,6 +26,10 @@ const ProductChart = (props) => {
         setTotal(sum);
       });
     }
+
+    return () => {
+      dispatch(resetFilterDate());
+    }
   }, [props.products, state]);
 
   useEffect(() => {
@@ -46,7 +50,7 @@ const ProductChart = (props) => {
       setDateCustom(null);
       setSelectedDate(ev.target.value);
       setState(getFilterProductByDate(products, ev.target.value));
-      dispatch(resetFilterDate())
+      dispatch(resetFilterDate());
     }
   }
 
