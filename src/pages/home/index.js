@@ -25,8 +25,6 @@ const HomePage = () => {
       }
     });
   }
-
-  console.log(products);
   
   return (
     <React.Fragment>

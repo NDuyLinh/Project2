@@ -6,6 +6,11 @@ const initialState = {
     toastType: '',
     content: '',
     autoDeleteTime: 3000
+  },
+  filterDate: {
+    type: null,
+    startDate: null,
+    endDate: null
   }
 };
 
@@ -23,10 +28,16 @@ export const globalSlice = createSlice({
     closeToastNotification: (state) => {
       state.toast.toastType = '';
       state.toast.content = '';
+    },
+    setFilterDate: (state, {payload}) => {
+      state.filterDate = payload;
+    },
+    resetFilterDate: (state) => {
+      state.filterDate = initialState.filterDate;
     }
   },
 });
 
-export const { setSmallLayout, setToastType, closeToastNotification } = globalSlice.actions;
+export const { setSmallLayout, setToastType, closeToastNotification, setFilterDate, resetFilterDate } = globalSlice.actions;
 
 export default globalSlice.reducer;

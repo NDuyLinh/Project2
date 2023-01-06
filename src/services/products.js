@@ -39,8 +39,7 @@ export const getArrDate = (fromDate, toDate) => {
   return result;
 }
 
-export const getFilterProductByDate = (products, type) => {
-
+export const getFilterProductByDate = (products, type, startDate, endDate) => {
   if(products.length === 0) {
     return;
   }
@@ -69,6 +68,13 @@ export const getFilterProductByDate = (products, type) => {
         products, 
         moment().startOf("month"),
         moment()
+      );
+      break;
+    case typeFilter.custom:
+      result = formatFilterProduct(
+        products, 
+        moment(startDate, "DD/MM/yyyy"),
+        moment(endDate, "DD/MM/yyyy")
       );
       break;
     default:

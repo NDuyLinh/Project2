@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isOpen: false,
+  showDateModal: false,
   selectionCourse: ''
 };
 
@@ -16,10 +17,13 @@ export const modalSlice = createSlice({
     closeModal: (state) => {
       state.isOpen = false;
       state.selectionCourse = '';
+    },
+    isShowDateModal: (state, {payload}) => {
+      state.showDateModal = payload;
     }
   },
 });
 
-export const { openModal, closeModal } = modalSlice.actions;
+export const { openModal, closeModal, isShowDateModal } = modalSlice.actions;
 
 export default modalSlice.reducer;

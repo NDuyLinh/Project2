@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import store from "./reducer";
 import DashBoard from "./pages/DashBoard";
 import ScrollToTop from "./components/ScrollToTop";
+import Modal from './components/Modal';
 import { BrowserRouter  } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -13,6 +14,7 @@ root.render(
     <BrowserRouter  basename='/'>
       <ScrollToTop/>
       <DashBoard/>
+      <Modal/>
     </BrowserRouter>
   </Provider>
 );

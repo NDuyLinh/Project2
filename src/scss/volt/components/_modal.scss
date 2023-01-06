@@ -7,6 +7,10 @@
         position: relative;
         display: block;
     }
+
+    &.show-modal {
+        display: block;
+    }
 }
 
 .modal-content {

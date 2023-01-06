@@ -1,14 +1,21 @@
 
 import React, {useState, useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {Card, Form} from 'react-bootstrap';
 import { BarChart } from "./Charts";
-import { filterDate } from "../data/charts";
+import { filterDate, typeFilter } from "../data/charts";
 import { getFilterProductByDate } from "../services/products";
+import { isShowDateModal } from "../reducer/slices/ModalSlice";
+import { resetFilterDate } from "../reducer/slices/GlobalSlice";
 
 const ProductChart = (props) => {
   const { title, products } = props;
   const [total, setTotal] = useState(0);
   const [state, setState] = useState(null);
+  const dispatch = useDispatch();
+  const customDate = useSelector(state => state.globalSlice.filterDate);
+  const [dateCustom, setDateCustom] = useState(null);
+  const [selectedDate, setSelectedDate] = useState("");
   const series = (state && state.data.map(d => d.value)) || [];
 
   useEffect(() => {
@@ -19,11 +26,28 @@ const ProductChart = (props) => {
         setTotal(sum);
       });
     }
-  }, [props.products, state])
+  }, [props.products, state]);
+
+  useEffect(() => {
+    if(customDate.type === typeFilter.custom) {
+      setDateCustom(`${customDate.startDate} - ${customDate.endDate}`);
+      setSelectedDate(`${customDate.startDate} - ${customDate.endDate}`);
+      setState(getFilterProductByDate(products, typeFilter.custom, customDate.startDate, customDate.endDate));
+      return;
+    }
+    setDateCustom(null);
+  }, [customDate]);
 
   const onSelectedDate = (ev) => {
     ev.preventDefault();
-    setState(getFilterProductByDate(products, ev.target.value));
+    if(ev.target.value === typeFilter.custom) {
+      dispatch(isShowDateModal(true));
+    } else {
+      setDateCustom(null);
+      setSelectedDate(ev.target.value);
+      setState(getFilterProductByDate(products, ev.target.value));
+      dispatch(resetFilterDate())
+    }
   }
 
   return (
@@ -35,8 +59,8 @@ const ProductChart = (props) => {
           <Form>
             <Form.Group id="frameworks" className="mb-3">
               <Form.Label>Filter</Form.Label>
-              <Form.Select className="pr-4" onChange={(ev) => onSelectedDate(ev)}>
-                <option defaultValue>Filter</option>
+              <Form.Select className="pr-4" onChange={(ev) => onSelectedDate(ev)} value={selectedDate}>
+                <option>Filter</option>
                 {filterDate.map((data, index) => (
                   <option 
                     key={`filter-${index}`}
@@ -45,6 +69,12 @@ const ProductChart = (props) => {
                     {data.label}
                   </option>
                 ))}
+                {
+                  customDate.type === typeFilter.custom &&
+                  <option value={dateCustom} className="d-none">
+                      {dateCustom}
+                  </option>
+                }
               </Form.Select>
             </Form.Group>
           </Form>
