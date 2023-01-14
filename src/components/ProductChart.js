@@ -83,14 +83,14 @@ const ProductChart = (props) => {
             </Form.Group>
           </Form>
         </div>
-        <div className="d-block ms-auto">
+        {/* <div className="d-block ms-auto">
           {state && state.data && state.data.map((d, index) => (
             <div key={`bar-element-${index}`} className="d-flex align-items-center text-end mb-2">
               <span className={`shape-xs rounded-circle me-2`} style={{backgroundColor:`rgb(${d.color})`}}/>
               <small className="fw-normal">{d.sumProduct} product</small>
             </div>
           ))}
-        </div>
+        </div> */}
       </Card.Body>
       {state && state.data && <Card.Body className="p-2 overflow-auto">
         <BarChart labels={state.labels} series={series} />

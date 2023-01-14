@@ -12,6 +12,7 @@ export const getDate = (date) => moment(date).format("YYYY-MM-DD");
 export const formatFilterProduct = (products, fromDate, toDate) => {
   const formatFromDate = getDate(fromDate);
   const formatToDate = getDate(toDate);
+  console.log("momomomo: ",products);
   const productsFilter = products.filter(product => 
     moment(product.date, "DD-MM-YYYY")
     .isBetween(getDate(fromDate.subtract(1, "days")), formatToDate));
@@ -80,41 +81,61 @@ export const getFilterProductByDate = (products, type, startDate, endDate) => {
     default:
       break;
   }
+  console.log("result: ", result);
+
   if(result.productsFilter && result.productsFilter.length > 0) {
     const axisY = getArrDate(result.fromDate, result.toDate);
+    console.log(axisY);
     let productsChart = [];
     // loop date
     axisY.reduce((total, currValue, index) => {
-      // loop value
-      for(let product of result.productsFilter) {
-        const indexProduct = productsChart.findIndex((item) => item.color === product.color);
-        if(indexProduct >= 0) {
-          let nowValue = productsChart[indexProduct].value[index];
-          if(nowValue === 0 || isNil(nowValue)) {
-            nowValue = !isNil(product.value) && product.date === currValue ? product.value : 0;
-          }
-          productsChart[indexProduct].value[index] = nowValue;
-          productsChart[indexProduct].sumProduct += parseInt(nowValue);
-        } else {
-          const numberProduct = !isNil(product.value) && product.date === currValue ? product.value : 0;
-          let firstProduct = {
-            label: product.color,
-            color: product.color,
-            fromDate: result.fromDate,
-            toDate: result.toDate,
-            sumProduct: parseInt(numberProduct),
-            value: [numberProduct]
-          }
-          productsChart.push(firstProduct);
-        }
+      let productOfDate = {
+        label: currValue,
+        fromDate: result.fromDate,
+        toDate: result.toDate,
+        value: []
       }
+      let count = 0;
+      result.productsFilter
+        .filter(product => currValue === product.date)
+        .map(mapProduct => {
+          count += mapProduct.value;
+        });
+      productOfDate.sumProduct = count;
+      productOfDate.value.push(count);
+      productsChart.push(productOfDate)
+
+      // loop value
+      // for(let product of result.productsFilter) {
+      //   const indexProduct = productsChart.findIndex((item) => item.color === product.color);
+      //   if(indexProduct >= 0) {
+      //     let nowValue = productsChart[indexProduct].value[index];
+      //     if(nowValue === 0 || isNil(nowValue)) {
+      //       nowValue = !isNil(product.value) && product.date === currValue ? product.value : 0;
+      //     }
+      //     productsChart[indexProduct].value[index] = nowValue;
+      //     productsChart[indexProduct].sumProduct += parseInt(nowValue);
+      //   } else {
+      //     const numberProduct = !isNil(product.value) && product.date === currValue ? product.value : 0;
+      //     let firstProduct = {
+      //       label: product.color,
+      //       color: product.color,
+      //       fromDate: result.fromDate,
+      //       toDate: result.toDate,
+      //       sumProduct: parseInt(numberProduct),
+      //       value: [numberProduct]
+      //     }
+      //     productsChart.push(firstProduct);
+      //   }
+      // }
       return total;
     }, []);
-    if(productsChart.length > 0) {
-      productsChart.forEach((item, index) => {
-        cssVar(`--ct-chart-${index}`, `rgb(${item.color})`);
-      })
-    }
+    // if(productsChart.length > 0) {
+    //   productsChart.forEach((item, index) => {
+    //     cssVar(`--ct-chart-${index}`, `rgb(${item.color})`);
+    //   })
+    // }
+    console.log("productsChart:", productsChart);
     return {
       labels: axisY,
       data: productsChart

@@ -8,7 +8,7 @@ export default class memberActions {
       if(isNil(product.color) || isNil(product.timestamp)) {
         return [...total];
       }
-      const formatDate = moment(parseInt(product.timestamp) * 1000).format("DD-MM-YYYY");
+      const formatDate = moment(product.timestamp, "DD/MM/YYYY HH:mm:ss").format("DD-MM-YYYY");
       const findIndexProduct = total.findIndex(item => 
         item && 
         item.date === formatDate && 
