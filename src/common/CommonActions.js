@@ -1,5 +1,6 @@
 import React from "react";
 import { capitalize } from "lodash";
+import { ADMIN } from "./Foundation";
 
 export default class CommonActions {
   
@@ -15,5 +16,9 @@ export default class CommonActions {
       .split('_')
       .map(mess => capitalize(mess))
       .join(" ");
+  }
+
+  static isAdmin(gmail) {
+    return gmail.split("@")[0] === ADMIN;
   }
 }

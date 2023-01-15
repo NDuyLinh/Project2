@@ -27,3 +27,5 @@ export const STATUS_VOTE = [
     icon: faBaby
   }
 ]
+
+export const ADMIN = "admin";

@@ -20,7 +20,6 @@ const Report = () => {
       if (!isNil(data)) {
         const response = Object.values(data).sort((a, b) => parseInt(b.timestamp) - parseInt(a.timestamp));
         const products = memberActions.fetchProduct(response);
-        console.log(products);
         setProducts(products);
       }
     });

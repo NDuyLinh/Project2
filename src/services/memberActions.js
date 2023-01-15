@@ -18,7 +18,7 @@ export default class memberActions {
         total[findIndexProduct].value += 1;
         return [...total];
       }
-      return [...total, {color: product.color, date: formatDate, value: 1}]
+      return [...total, {color: product.color, date: formatDate, value: 1, status: product.status}]
     },[]);
 
     formatProduct.forEach(function(row, index) {

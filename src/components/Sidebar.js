@@ -1,10 +1,11 @@
 
 import React, { useState } from "react";
 import SimpleBar from 'simplebar-react';
+import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faFolder } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faFolder, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -12,6 +13,7 @@ const SideBar = (props = {}) => {
   const location = useLocation();
   const { pathname } = location;
   const [show, setShow] = useState(false);
+  const { isAdmin } = useSelector(state => state.membersSlice);
   const showClass = show ? "show" : "";
 
   const onCollapse = () => setShow(!show);
@@ -78,6 +80,7 @@ const SideBar = (props = {}) => {
               <Image src={`${process.env.PUBLIC_URL}/images/image-2.png`} className="card-img-top border-white px-4 py-2" />
               <NavItem title="Home" link="/" icon={faHome} />
               <NavItem title="Report" link="/report" icon={faFolder} />
+              {isAdmin && <NavItem title="Users" link="/users" icon={faUser} />}
               <Dropdown.Divider className="my-3 border-indigo" />
             </Nav>
           </div>

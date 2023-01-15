@@ -16,10 +16,8 @@ const HomePage = () => {
   const getAllProducts = () => {
     onValue(dbRef, (snapshot) => {
       const data = snapshot.val();
-      console.log(data);
       if (!isNil(data)) {
         const products = memberActions.fetchProduct(Object.values(data));
-        console.log(products);
         setProducts(products);
       }
     });

@@ -1,35 +1,39 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import { Col, Row, Card, Image, Button, Container } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
+import { Col, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { getDocs } from "firebase/firestore";
+import { fireStoreRef } from "../../services/firebaseConfig";
+import MembersTable from "../../components/Members";
 
-import { Link } from 'react-router-dom';
+const Members = (props) => {
+  const { isAdmin } = useSelector((state) => state.membersSlice);
+  const [member, setMembet] = useState([]);
 
-const Members = () => {
+  if(!isAdmin) props.history.push("/");
+
+  useEffect(() => {
+    getDocs(fireStoreRef).then((snapShot) => {
+      let members = [];
+      snapShot.docs.forEach((doc) => {
+        members.push({...doc.data(), id: doc.id})
+      })
+      if(members.length > 0) {
+        const filter = members.filter(member => member.role === "user");
+        setMembet(filter);
+      }
+    })
+  }, []);
+
   return (
-    <main>
-      <section className="d-flex align-items-center justify-content-center">
-        <Container>
-          <Row>
-            <Col xs={12} className="text-center d-flex align-items-center justify-content-center">
-              <div>
-                <Card.Link as={Link} to="/">
-                  <Image src={`${process.env.PUBLIC_URL}/images/coming.png`} className="img-fluid" />
-                </Card.Link>
-                <p className="lead my-4">
-                  Tôi đang trong quá trình hoàn thiện trang. Mong nhận được góp ý từ mọi người.
-                </p>
-                <Button as={Link} variant="primary" className="animate-hover" to="/">
-                  <FontAwesomeIcon icon={faChevronLeft} className="animate-left-3 me-3 ms-2" />
-                  Trở lại
-                </Button>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-    </main>
+    <React.Fragment>
+      <Row>
+        <Col xs={12} xl={12} className="mb-4">
+          <MembersTable members={member}/>
+        </Col>
+      </Row>
+    </React.Fragment>
   );
-}
+};
 
-export default Members
+export default withRouter(Members);

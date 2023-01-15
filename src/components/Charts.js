@@ -91,8 +91,7 @@ export const CircleChart = (props) => {
 
 export const BarChart = (props) => {
   const { labels = [], series = [], chartClassName = "ct-golden-section" } = props;
-  const data = { labels, series, distributeSeries: true };
-  console.log(series);
+  const data = { labels, series: series, distributeSeries: true };
   const options = {
     low: 0,
     showArea: true,

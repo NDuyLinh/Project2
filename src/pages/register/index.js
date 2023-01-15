@@ -6,14 +6,15 @@ import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-sv
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-
+import { addDoc } from "firebase/firestore";
+import { fireStoreRef } from "../../services/firebaseConfig";
 import { routes } from "../../routes";
 import memberActions from "../../services/memberActions";
 
 const Register = ({history}) => {
   const [errorMessage, setErrorMessage] = useState(null);
   
-  if (!Session.loadSession()) {
+  if (Session.loadSession()) {
     history.push("/");
   }
 
@@ -34,6 +35,11 @@ const Register = ({history}) => {
       setErrorMessage(response.errorMessage);
       return;
     }
+    await addDoc(fireStoreRef, {
+      mail: email,
+      name: email,
+      role: "user"
+    })
     reset();
     history.push("/");
   }
@@ -113,14 +119,14 @@ const Register = ({history}) => {
                   </Button>
                 </Form>
 
-                <div className="d-flex justify-content-center align-items-center mt-4">
+                {/* <div className="d-flex justify-content-center align-items-center mt-4">
                   <span className="fw-normal">
                     Already have an account?
                     <Card.Link as={Link} to={routes.login} className="fw-bold">
                       {` Login here `}
                     </Card.Link>
                   </span>
-                </div>
+                </div> */}
               </div>
             </Col>
           </Row>

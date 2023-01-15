@@ -8,10 +8,11 @@ import { useForm } from "react-hook-form";
 import { setMembers } from "../../reducer/slices/MembersSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
-import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from 'react-bootstrap';
+import { Col, Row, Form, Card, Button, Container, InputGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { routes } from "../../routes";
 import { LOGIN_FAILED } from "../../data/message";
+import CommonActions from "../../common/CommonActions";
 
 /** ACTION */
 import memberActions from "../../services/memberActions";
