@@ -73,7 +73,7 @@ const DashBoard = (props) => {
           snapShot.docs.forEach((doc) => {
             member.push({ ...doc.data(), id: doc.id});
           })
-          dispatch(setRole(member[0] && member[0].mail === "admin"));
+          dispatch(setRole(member[0] && member[0].role === "admin"));
         })
         
       } else {
