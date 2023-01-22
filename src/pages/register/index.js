@@ -35,11 +35,6 @@ const Register = ({history}) => {
       setErrorMessage(response.errorMessage);
       return;
     }
-    await addDoc(fireStoreRef, {
-      mail: email,
-      name: email,
-      role: "user"
-    })
     reset();
     history.push("/");
   }
