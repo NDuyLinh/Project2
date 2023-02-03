@@ -12,15 +12,12 @@ const headers = [
 
 const ProductTable = ({ products }) => {
   const exportRef = useRef(null);
-  const dispatch = useDispatch();
-
-  const TableRow = ({index, date, color, value}) => {
+  const TableRow = ({index, date, color}) => {
     return (
       <tr>
         <td className="fw-bold">{index}</td>
         <td>{date}</td>
         <td><div className="color-table" style={{backgroundColor: `rgb(${color})`}}></div></td>
-        <td>{value}</td>
       </tr>
     );
   };
@@ -53,7 +50,6 @@ const ProductTable = ({ products }) => {
             <th scope="col"></th>
             <th scope="col">Date</th>
             <th scope="col">Color</th>
-            <th scope="col">Number</th>
           </tr>
         </thead>
         <tbody>

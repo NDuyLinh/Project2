@@ -3,12 +3,12 @@ import CommonActions from "../common/CommonActions";
 import moment from "moment";
 import { isNil } from "lodash";
 export default class memberActions {
-  static fetchProduct (products) {
+  static fetchProduct (products, isReport) {
     const formatProduct = products.reduce((total, product) => {
       if(isNil(product.color) || isNil(product.timestamp)) {
         return [...total];
       }
-      const formatDate = moment(product.timestamp, "DD/MM/YYYY HH:mm:ss").format("DD-MM-YYYY");
+      const formatDate = isReport ? product.timestamp : moment(product.timestamp, "DD/MM/YYYY HH:mm:ss").format("DD-MM-YYYY");
       const findIndexProduct = total.findIndex(item => 
         item && 
         item.date === formatDate && 

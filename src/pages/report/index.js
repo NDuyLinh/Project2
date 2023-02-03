@@ -14,12 +14,20 @@ const Report = () => {
     getAllProducts();
   }, []);
 
+  const sortTime = (a, b) => {
+    if (b.timestamp < a.timestamp)
+      return -1;
+    if ( b.timestamp > a.timestamp)
+      return 1;
+    return 0;
+  }
+
   const getAllProducts = () => {
     onValue(dbRef, (snapshot) => {
       const data = snapshot.val();
       if (!isNil(data)) {
-        const response = Object.values(data).sort((a, b) => parseInt(b.timestamp) - parseInt(a.timestamp));
-        const products = memberActions.fetchProduct(response);
+        const response = Object.values(data).sort(sortTime);
+        const products = memberActions.fetchProduct(response, true);
         setProducts(products);
       }
     });
