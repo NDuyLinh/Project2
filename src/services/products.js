@@ -9,12 +9,12 @@ export const formatDate = (date) => {
 
 export const getDate = (date) => moment(date).format("YYYY-MM-DD");
 
-export const formatFilterProduct = (products, fromDate, toDate) => {
+export const formatFilterProduct = (products, fromDate, toDate, isCustom = false) => {
   const formatFromDate = getDate(fromDate);
   const formatToDate = getDate(toDate);
   const productsFilter = products.filter(product => 
-    moment(product.date, "DD-MM-YYYY")
-    .isBetween(getDate(fromDate.subtract(1, "days")), formatToDate));
+    moment(product.date, "DD/MM/YYYY")
+    .isBetween(getDate(fromDate.subtract(1, "days")), isCustom ? getDate(toDate.add(1, "days")) : formatToDate));
   return {
     fromDate: formatDate(formatFromDate),
     toDate: formatDate(formatToDate),
@@ -74,7 +74,8 @@ export const getFilterProductByDate = (products, type, startDate, endDate) => {
       result = formatFilterProduct(
         products, 
         moment(startDate, "DD/MM/yyyy"),
-        moment(endDate, "DD/MM/yyyy")
+        moment(endDate, "DD/MM/yyyy"),
+        true
       );
       break;
     default:

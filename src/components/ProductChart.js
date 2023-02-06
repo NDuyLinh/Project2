@@ -28,7 +28,7 @@ const ProductChart = (props) => {
     }
 
     return () => {
-      dispatch(resetFilterDate());
+      // dispatch(resetFilterDate());
     }
   }, [props.products, state]);
 

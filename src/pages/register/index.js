@@ -6,8 +6,6 @@ import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-sv
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-import { addDoc } from "firebase/firestore";
-import { fireStoreRef } from "../../services/firebaseConfig";
 import { routes } from "../../routes";
 import memberActions from "../../services/memberActions";
 
