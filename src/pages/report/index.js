@@ -3,7 +3,7 @@ import { Col, Row } from "react-bootstrap";
 import Calendar from "../../components/Calendar";
 import { dbRef } from "../../services/firebaseConfig";
 import memberActions from "../../services/memberActions";
-
+import moment from "moment";
 import { onValue } from "firebase/database";
 import { isNil } from "lodash";
 import ProductTable from "../../components/Tables";
@@ -14,19 +14,11 @@ const Report = () => {
     getAllProducts();
   }, []);
 
-  const sortTime = (a, b) => {
-    if (b.timestamp < a.timestamp)
-      return -1;
-    if ( b.timestamp > a.timestamp)
-      return 1;
-    return 0;
-  }
-
   const getAllProducts = () => {
     onValue(dbRef, (snapshot) => {
       const data = snapshot.val();
       if (!isNil(data)) {
-        const response = Object.values(data).sort(sortTime);
+        const response = Object.values(data).sort((a,b) => moment(b.timestamp) - moment(a.timestamp));
         const products = memberActions.fetchProduct(response, true);
         setProducts(products);
       }
