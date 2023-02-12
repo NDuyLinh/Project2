@@ -60,14 +60,16 @@ export const getFilterProductByDate = (products, type, startDate, endDate) => {
       result = formatFilterProduct(
         products, 
         moment().startOf("isoWeek"),
-        moment().endOf("isoWeek")
+        moment().endOf("isoWeek"),
+        true
       );
       break;
     case typeFilter.month:
       result = formatFilterProduct(
         products, 
         moment().startOf("month"),
-        moment()
+        moment(),
+        true
       );
       break;
     case typeFilter.custom:
