@@ -18,7 +18,7 @@ const Report = () => {
     onValue(dbRef, (snapshot) => {
       const data = snapshot.val();
       if (!isNil(data)) {
-        const response = Object.values(data).sort((a,b) => moment(b.timestamp) - moment(a.timestamp));
+        const response = Object.values(data).sort((a,b) => moment(b.timestamp, "DD/MM/YYYY HH:mm:ss") - moment(a.timestamp, "DD/MM/YYYY HH:mm:ss"));
         const products = memberActions.fetchProduct(response, true);
         setProducts(products);
       }
